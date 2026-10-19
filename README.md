@@ -1,135 +1,178 @@
-# TheInterviewMind 🚀
+# 🎯 TheInterviewMind
 
-🔗 **Live Deployment**: [https://interview-6vmwj5n74-ankit-yadav.vercel.app/](https://interview-6vmwj5n74-ankit-yadav.vercel.app/)
+### AI-Powered Interview Preparation Platform
 
-TheInterviewMind is an advanced AI-powered mock interview web application built on the MERN stack. It conducts realistic, conversational voice interviews, parses resumes, provides detailed performance reports, and features an integrated credit-based billing system.
+TheInterviewMind is a full-stack web application designed to help candidates prepare for interviews using AI-powered assistance, user authentication, database integration, and payment functionality.
 
----
+🌐 **Live Website:** [ashutosh-theinterviewmind.vercel.app](https://ashutosh-theinterviewmind.vercel.app/)
 
-## 🏗️ Architecture & How It Works
-
-The application follows a client-server architecture:
-
-```
-┌──────────────────┐               ┌──────────────────┐
-│  React Frontend  │ ◄───────────► │   Node Backend   │
-│     (Client)     │  HTTP/JSON    │     (Server)     │
-└────────┬─────────┘               └────────┬─────────┘
-         │                                  │
-   ┌─────┴─────┐                      ┌─────┴─────┐
-   │ Firebase  │                      │  MongoDB  │ (Database)
-   │  (Auth)   │                      │  Database │
-   └───────────┘                      └─────┬─────┘
-                                            │
-                                      ┌─────┴─────┐
-                                      │OpenRouter │ (AI Evaluation)
-                                      └─────┬─────┘
-                                            │
-                                      ┌─────┴─────┐
-                                      │ Razorpay  │ (Payments)
-                                      └───────────┘
-```
-
-### 1. Authentication (Firebase + JWT)
-* Users log in using Google Authentication via Firebase on the frontend.
-* The frontend sends the user details to the backend `/api/auth/google`, which generates a secure JSON Web Token (JWT).
-* This JWT is stored in an `httpOnly`, secure cookie named `token`, which automatically authenticates subsequent requests securely.
-
-### 2. Resume Parsing & Setup
-* Candidates upload their resume (PDF format) under **Interview Setup**.
-* The server uses `pdfjs-dist` to extract the text and forwards it to the AI model (`openrouter/free`).
-* The AI returns structured JSON data representing the candidate's **Role, Experience, Projects, and Skills**.
-* Empty fields on the form are autofilled automatically without overwriting existing entries.
-
-### 3. Voice Interview Engine
-* Once started, the backend consumes **50 credits** and generates 5 tailored questions progressing in difficulty (Easy ➔ Medium ➔ Hard).
-* The browser's native **Web Speech API** (`webkitSpeechRecognition`) is used for speech-to-text. It streams transcriptions in real time and handles voice pauses gracefully.
-* When the user submits their answer or the timer runs out, the answer is evaluated by the AI.
-
-### 4. AI Evaluation & Scoring
-* Answers are judged by the AI model on:
-  1. **Confidence** (0-10)
-  2. **Communication** (0-10)
-  3. **Correctness** (0-10)
-* The model returns a final score (average of the three) and concise feedback.
-* Upon finishing all 5 questions, the backend computes the average metrics and generates an interview performance report.
-
-### 5. Credits & Payment System (Razorpay)
-* Starting an interview costs **50 credits**. Users start with 100 free credits upon sign-up.
-* If credits run out, users can purchase additional credit bundles (Starter or Pro) from the **Pricing** page.
-* Razorpay handles payments securely. The backend verifies the digital signature before updating the user's credits.
+📂 **GitHub Repository:** [TheInterviewMind](https://github.com/ASHUTOSHSINGH0000/TheInterviewMind)
 
 ---
 
-## 🛠️ Folder Structure
+## ✨ Features
 
-```
-3.TheInterviewMind/
-├── client/                 # React Frontend (Vite)
+- 🤖 **AI Integration** — AI-powered assistance using the OpenRouter API.
+- 🔐 **User Authentication** — Firebase Authentication.
+- 🗄️ **Database Management** — MongoDB Atlas integration.
+- 💳 **Payment Integration** — Razorpay payment workflow, currently configured for testing.
+- ⚛️ **Modern Frontend** — React and Vite.
+- 🚀 **REST API Backend** — Node.js and Express.js.
+- ☁️ **Cloud Deployment** — Frontend hosted on Vercel and backend hosted on Render.
+
+## 🛠️ Tech Stack
+
+| Technology              | Purpose                                 |
+| ----------------------- | --------------------------------------- |
+| React                   | Frontend user interface                 |
+| Vite                    | Frontend development and build tooling  |
+| JavaScript              | Application development                 |
+| Node.js                 | Backend runtime                         |
+| Express.js              | Backend API                             |
+| MongoDB Atlas           | Cloud database                          |
+| Firebase Authentication | User authentication                     |
+| OpenRouter API          | AI integration                          |
+| Razorpay                | Payment integration                     |
+| Vercel                  | Frontend hosting                        |
+| Render                  | Backend hosting                         |
+| Git & GitHub            | Version control and source code hosting |
+
+## 📁 Project Structure
+
+```text
+TheInterviewMind/
+├── client/                 # React frontend
+│   ├── public/
 │   ├── src/
-│   │   ├── components/     # UI Components (Setup, Voice Interview, Report)
-│   │   ├── pages/          # Main Pages (Auth, Home, History, Pricing)
-│   │   ├── redux/          # State management (User info, credits)
-│   │   └── utils/          # Firebase config
+│   ├── package.json
+│   └── .env                # Local environment variables
+├── server/                 # Node.js and Express backend
+│   ├── controllers/
+│   ├── routes/
+│   ├── index.js
 │   └── package.json
-└── server/                 # Express Backend (NodeJS)
-    ├── config/             # DB & JWT config
-    ├── controllers/        # Route controllers (Auth, Payments, Interview logic)
-    ├── middlewares/        # Authentication & file upload middleware
-    ├── models/             # Database Schemas (User, Interview)
-    ├── routes/             # Express API Endpoints
-    ├── services/           # OpenRouter AI & Razorpay services
-    └── package.json
+├── .gitignore
+└── README.md
 ```
 
----
+*Note: The `.env` files are for local configuration and should not be committed to GitHub.*
 
-## 💻 Local Setup & Development
+## 🚀 Getting Started
 
-### 1. Prerequisites
-Ensure you have **Node.js** (v18+) and **Git** installed.
+Follow these steps to run TheInterviewMind locally.
 
-### 2. Backend Config (`server/`)
-Create a `server/.env` file with:
-```env
-PORT=8000
-MONGODB_URL=mongodb+srv://...           # Your MongoDB connection string
-JWT_SECRET=your_jwt_secret_key          # Random alphanumeric string
-OPENROUTER_API_KEY=sk-or-v1-...         # OpenRouter API key (uses free models)
-RAZORPAY_KEY_ID=rzp_test_...            # Razorpay Test Key
-RAZORPAY_KEY_SECRET=your_secret         # Razorpay Secret Key
-FRONTEND_URL=http://localhost:5173      # Local frontend URL
+### Prerequisites
+
+Install or configure the following:
+
+- [Node.js](https://nodejs.org/)
+- npm
+- A MongoDB Atlas database
+- A Firebase project
+- An OpenRouter API key
+- Razorpay test credentials
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/ASHUTOSHSINGH0000/TheInterviewMind.git
+cd TheInterviewMind
 ```
-To run the server:
+
+### 2. Configure the Backend
+
 ```bash
 cd server
 npm install
+```
+
+Create a `.env` file inside the `server` directory:
+
+```env
+PORT=5001
+MONGODB_URL=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret
+FRONTEND_URL=http://localhost:5173
+OPENROUTER_API_KEY=your_openrouter_api_key
+RAZORPAY_KEY_ID=your_razorpay_key_id
+RAZORPAY_KEY_SECRET=your_razorpay_key_secret
+```
+
+Replace each placeholder with your own credentials. Never publish actual secrets.
+
+Start the backend:
+
+```bash
 npm run dev
 ```
 
-### 3. Frontend Config (`client/`)
-Create a `client/.env` file with:
-```env
-VITE_API_URL=http://localhost:8000
-VITE_FIREBASE_APIKEY=AIzaSy...           # Your Firebase Web API Key
-VITE_RAZORPAY_KEY_ID=rzp_test_...        # Razorpay Test Key ID
-```
-To run the frontend:
+The backend should run at `http://localhost:5001`.
+
+### 3. Configure the Frontend
+
+Open a second terminal window. From the project root, run:
+
 ```bash
 cd client
 npm install
+```
+
+Create a `.env` file inside the `client` directory:
+
+```env
+VITE_API_URL=http://localhost:5001
+VITE_RAZORPAY_KEY_ID=your_razorpay_key_id
+VITE_FIREBASE_APIKEY=your_firebase_api_key
+VITE_FIREBASE_AUTH_DOMAIN=your_firebase_auth_domain
+VITE_FIREBASE_PROJECT_ID=your_firebase_project_id
+```
+
+Use the exact variable names expected by your application and supply your own Firebase configuration.
+
+Start the frontend:
+
+```bash
 npm run dev
 ```
 
+Open the local URL shown in your terminal, usually `http://localhost:5173`.
+
+## 🌍 Live Deployment
+
+The application uses the following services:
+
+- **Frontend:** [Vercel](https://vercel.com/)
+- **Backend:** [Render](https://render.com/)
+- **Database:** [MongoDB Atlas](https://www.mongodb.com/atlas)
+- **Authentication:** [Firebase](https://firebase.google.com/)
+
+### Live Demo
+
+👉 [Visit TheInterviewMind](https://ashutosh-theinterviewmind.vercel.app/)
+
+## 🔒 Security
+
+- Store credentials in environment variables.
+- Never commit `.env` files, database passwords, or private API keys.
+- Restrict database network access and use appropriate database permissions.
+- Keep payment functionality in test mode until production payment credentials and security checks are complete.
+- Validate and verify payment transactions on the backend.
+
+## 🚧 Future Enhancements
+
+- Expand AI-powered mock interview functionality.
+- Introduce personalized interview preparation plans.
+- Add interview progress tracking and performance analytics.
+- Support additional technical and non-technical interview categories.
+- Improve automated testing, accessibility, and monitoring.
+
+## 👨‍💻 Author
+
+**Ashutosh Kumar Singh**
+
+GitHub: [@ASHUTOSHSINGH0000](https://github.com/ASHUTOSHSINGH0000)
+
 ---
 
-## 🚀 Deployment Overview
+⭐ If you find this project interesting, consider starring the repository!
 
-The application is deployed live:
-* **Frontend**: [https://interview-6vmwj5n74-ankit-yadav.vercel.app/](https://interview-6vmwj5n74-ankit-yadav.vercel.app/) (Hosted on Vercel)
-* **Backend**: Deployed on Render/Railway.
-
-The codebase is fully optimized for cross-origin deployment:
-* **Frontend** can be hosted on **Vercel** or **Netlify** (Root folder: `client`).
-* **Backend** can be hosted on **Render** or **Railway** (Root folder: `server`).
-* Cookies are configured with dynamic `secure` and `sameSite: "none"` flags to support cross-domain session cookies in production.
