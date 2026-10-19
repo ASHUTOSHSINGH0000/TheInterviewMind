@@ -1,0 +1,152 @@
+@import "tailwindcss";
+
+:root {
+  color-scheme: light;
+  --brand-red: #f0002f;
+  --brand-burgundy: #4b171f;
+  --brand-paper: #f7f7f5;
+  --brand-gray-light: #e4e4e6;
+  --brand-gray: #9a9a9f;
+  --brand-ink: #151313;
+  --color-canvas: var(--brand-paper);
+  --color-surface: #ffffff;
+  --color-muted: #69696e;
+  --color-line: var(--brand-gray-light);
+}
+
+@theme {
+  --color-brand-red: #f0002f;
+  --color-brand-burgundy: #4b171f;
+  --color-brand-paper: #f7f7f5;
+  --color-brand-gray: #9a9a9f;
+  --color-brand-gray-light: #e4e4e6;
+  --color-brand-ink: #151313;
+  --color-white: #f7f7f5;
+  --color-black: #151313;
+  --color-slate-50: #f7f7f5;
+  --color-slate-100: #f0f0f1;
+  --color-slate-200: #e4e4e6;
+  --color-slate-300: #c9c9cc;
+  --color-slate-400: #9a9a9f;
+  --color-slate-500: #77777c;
+  --color-slate-600: #69696e;
+  --color-slate-700: #4b4546;
+  --color-slate-800: #302a2b;
+  --color-slate-900: #151313;
+  --color-slate-950: #151313;
+  --color-gray-50: #f7f7f5;
+  --color-gray-100: #f0f0f1;
+  --color-gray-200: #e4e4e6;
+  --color-gray-300: #c9c9cc;
+  --color-gray-400: #9a9a9f;
+  --color-gray-500: #77777c;
+  --color-gray-600: #69696e;
+  --color-gray-700: #4b4546;
+  --color-gray-800: #302a2b;
+  --color-gray-900: #151313;
+  --color-gray-950: #151313;
+  --color-emerald-50: #fff0f2;
+  --color-emerald-100: #ffe0e5;
+  --color-emerald-200: #ffc2cc;
+  --color-emerald-300: #ff8da0;
+  --color-emerald-400: #fb425f;
+  --color-emerald-500: #f0002f;
+  --color-emerald-600: #f0002f;
+  --color-emerald-700: #4b171f;
+  --color-emerald-800: #6d1627;
+  --color-emerald-900: #4b171f;
+  --color-emerald-950: #4b171f;
+  --color-red-50: #fff0f2;
+  --color-red-100: #ffe0e5;
+  --color-red-200: #ffc2cc;
+  --color-red-300: #ff8da0;
+  --color-red-400: #fb425f;
+  --color-red-500: #f0002f;
+  --color-red-600: #f0002f;
+  --color-red-700: #4b171f;
+  --color-red-800: #6d1627;
+  --color-red-900: #4b171f;
+  --color-red-950: #4b171f;
+  --color-yellow-100: #ffe0e5;
+  --color-yellow-700: #6d1627;
+  --radius-xl: 6px;
+  --radius-2xl: 8px;
+  --radius-3xl: 8px;
+  --radius-4xl: 8px;
+}
+
+:root {
+  --bg: var(--brand-paper);
+  --panel: #ffffff;
+  --card: #ffffff;
+  --card-soft: #f0f0f1;
+  --muted: var(--brand-gray);
+  --text: var(--brand-ink);
+  --border: var(--brand-gray-light);
+  --primary: var(--brand-red);
+  --primary-strong: var(--brand-burgundy);
+  --accent: var(--brand-burgundy);
+  --accent-soft: #ffe0e5;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 0;
+  min-height: 100vh;
+  background: var(--brand-paper);
+  color: var(--text);
+  font-family: "Avenir Next", "Helvetica Neue", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  letter-spacing: 0 !important;
+}
+
+h1,
+h2 {
+  font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  font-weight: 600;
+  letter-spacing: 0 !important;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+::selection {
+  color: var(--brand-paper);
+  background: var(--brand-burgundy);
+}
+
+:focus-visible {
+  outline: 2px solid var(--brand-red);
+  outline-offset: 3px;
+}
+
+[class*="rounded-["] {
+  border-radius: 8px !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
